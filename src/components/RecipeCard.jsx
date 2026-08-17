@@ -1,4 +1,5 @@
 import { Clock, ChefHat, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const tagColor = {
   maroon: "bg-maroon text-beige",
@@ -7,7 +8,10 @@ const tagColor = {
 
 export default function RecipeCard({ recipe }) {
   return (
-    <div className="bg-white rounded-xl border border-beige-card overflow-hidden hover:shadow-md transition-shadow">
+    <Link
+      to={`/recipes/${recipe.id}`}
+      className="block bg-white rounded-xl border border-beige-card overflow-hidden hover:shadow-md hover:border-maroon transition-all"
+    >
       <div className="h-40 bg-beige-card flex items-center justify-center text-ink/40 text-sm">
         Recipe Image
       </div>
@@ -43,6 +47,6 @@ export default function RecipeCard({ recipe }) {
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

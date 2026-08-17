@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import Layout from "../components/Layout";
-import Home from "./Home";
-import CategoriesPage from "./CategoriesPage";
-import AboutPage from "./AboutPage";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import CategoriesPage from "./pages/CategoriesPage";
+import AboutPage from "./pages/AboutPage";
+import RecipeDetail from "./pages/RecipeDetail";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/recipes/:id" element={<RecipeDetail />} />
       </Route>
     </Routes>
   );
