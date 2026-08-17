@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-maroon: #7A2426;
+  --color-maroon-light: #B8443C;
+  --color-maroon-dark: #5A1A1B;
+  --color-beige: #F3E9DA;
+  --color-beige-card: #E8DCC8;
+  --color-turmeric: #C97A2B;
+  --color-ink: #2E2A26;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-beige);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+/* Signature element: subtle woven-mat (banig) texture behind the hero */
+.weave-texture {
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(122, 36, 38, 0.05) 0px,
+      rgba(122, 36, 38, 0.05) 2px,
+      transparent 2px,
+      transparent 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(201, 122, 43, 0.05) 0px,
+      rgba(201, 122, 43, 0.05) 2px,
+      transparent 2px,
+      transparent 10px
+    );
+}
