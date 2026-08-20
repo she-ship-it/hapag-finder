@@ -1,71 +1,52 @@
-import { useMemo, useEffect } from "react";
-import { useOutletContext, useSearchParams, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Hero from "../components/Hero";
 import RecipeCard from "../components/RecipeCard";
 import { recipes } from "../data/recipes";
 
 export default function Home() {
-  const { search, setSearch, activeCategory, setActiveCategory } = useOutletContext();
-  const [searchParams] = useSearchParams();
-  const location = useLocation();
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All Recipes");
 
-  useEffect(() => {
-    const cat = searchParams.get("cat");
-    if (cat) setActiveCategory(cat);
-  }, [searchParams]);
+  const featured = recipes.filter((r) => r.featured);
 
-  useEffect(() => {
-    if (location.hash === "#recipes") {
-      document.getElementById("recipes")?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [location]);
+  const handleCategoryClick = (cat) => {
+    setActiveCategory(cat);
+    navigate(`/recipes?cat=${encodeURIComponent(cat)}`);
+  };
 
-  const filtered = useMemo(() => {
-    return recipes.filter((r) => {
-      const matchesCategory = activeCategory === "All Recipes" || r.category === activeCategory;
-      const matchesSearch = r.title.toLowerCase().includes(search.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }, [search, activeCategory]);
-
-  const handleBrowseAll = () => {
-    setActiveCategory("All Recipes");
-    setSearch("");
-    document.getElementById("recipes")?.scrollIntoView({ behavior: "smooth" });
+  const handleSearchSubmit = () => {
+    navigate(`/recipes?search=${encodeURIComponent(search)}`);
   };
 
   return (
     <>
       <Hero
         search={search}
-        onSearch={setSearch}
+        onSearchChange={setSearch}
+        onSearchSubmit={handleSearchSubmit}
         activeCategory={activeCategory}
-        onCategory={setActiveCategory}
+        onCategoryClick={handleCategoryClick}
       />
 
-      <main id="recipes" className="max-w-5xl mx-auto px-6 py-10">
+      <main className="max-w-5xl mx-auto px-6 py-10">
         <h2 className="font-display font-semibold text-2xl text-ink mb-6 border-b border-beige-card pb-3">
           Featured Recipes
         </h2>
 
-        {filtered.length > 0 ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((r) => (
-              <RecipeCard key={r.id} recipe={r} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-ink/60 text-center py-12">
-            No recipes match your search yet — try another dish or category.
-          </p>
-        )}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featured.map((r) => (
+            <RecipeCard key={r.id} recipe={r} />
+          ))}
+        </div>
 
         <div className="text-center mt-14">
           <h3 className="font-display font-semibold text-xl mb-4">
             Hungry for More Recipes?
           </h3>
           <button
-            onClick={handleBrowseAll}
+            onClick={() => navigate("/recipes")}
             className="bg-maroon text-beige px-8 py-3 rounded-full font-semibold hover:bg-maroon-dark transition-colors"
           >
             Browse All Recipes

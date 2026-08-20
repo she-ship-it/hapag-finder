@@ -15,7 +15,7 @@ export default function CategoriesPage() {
         {categories.map((cat) => (
           <Link
             key={cat.name}
-            to={`/?cat=${encodeURIComponent(cat.name)}#recipes`}
+            to={cat.name === "All Recipes" ? "/recipes" : `/recipes?cat=${encodeURIComponent(cat.name)}`}
             className="block bg-white border border-beige-card rounded-xl p-6 hover:shadow-md hover:border-maroon transition-all"
           >
             <h2 className="font-display font-semibold text-lg text-maroon mb-2">{cat.name}</h2>
